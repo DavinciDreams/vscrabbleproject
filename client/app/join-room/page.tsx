@@ -37,22 +37,6 @@ export default function JoinRoomPage() {
 
     setIsJoining(true);
 
-    try {
-      // In a real implementation, we would verify the room exists on the server
-      // For now, we'll just navigate to the game room with the provided code
-      // This would be replaced with a fetch to check room validity
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      router.push(`/game/${roomCode.toUpperCase()}?name=${encodeURIComponent(playerName)}`);
-    } catch (error) {
-      toast({
-        title: "Error joining room",
-        description: "Invalid room code or room is full",
-        variant: "destructive"
-      });
-      setIsJoining(false);
-    }
-  };
 
   return (
     <main className="container mx-auto px-4 py-10">

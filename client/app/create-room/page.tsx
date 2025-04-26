@@ -32,15 +32,22 @@ export default function CreateRoomPage() {
     setIsCreating(true);
 
     try {
-      // Generate a 6-character room code
-      const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      const response = await fetch('/api/createRoom', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ playerName, maxPlayers }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const generatedCode = data.roomCode;
       setRoomCode(generatedCode);
 
-      // In a real implementation, we would create the room on the server here
-      // For now, we'll simulate a server request with a timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Then navigate to the game room with the room code
       router.push(`/game/${generatedCode}?name=${encodeURIComponent(playerName)}&host=true&maxPlayers=${maxPlayers}`);
     } catch (error) {
       toast({
@@ -51,7 +58,7 @@ export default function CreateRoomPage() {
       setIsCreating(false);
     }
   };
-
+  
   return (
     <main className="container mx-auto px-4 py-10">
       <h1 className="comic-header mb-10">CREATE A GAME ROOM</h1>

@@ -5,6 +5,8 @@ import { MAX_PLAYERS } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Copy, Share2, UserCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getSocket } from '@/lib/socket';
+
 
 export default function WaitingRoom() {
   const { gameState, playerId } = useGameStore();
@@ -120,7 +122,7 @@ export default function WaitingRoom() {
                 disabled={gameState.players.length < 2}
                 onClick={() => {
                   const socket = getSocket();
-                  socket.emit('startGame', { roomCode: gameState.roomCode });
+                  socket.emit('handleStartGame', { roomCode: gameState.roomCode });
                 }}
               >
                 Start Game

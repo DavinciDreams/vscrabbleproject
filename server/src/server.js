@@ -11,11 +11,11 @@ io.on('connection', (socket) => {
    console.debug('New client connected:', socket.id);
      console.log('A user connected');
 });
-server.listen(3000, () => {
+server.listen(3001, () => {
   console.log('Server listening on port 3000');
 });
 
-  socket.on('createNewRoom', () => {
+  io.on('createNewRoom', (socket) => {
     const roomCode = Math.random().toString(36).substr(2, 9);
     rooms.set(roomCode, {
       name: `Room ${roomCode}`,

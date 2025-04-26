@@ -31,28 +31,19 @@ const SocketHandler = (req, res) => {
     
     io.on('connection', (socket) => {
       console.debug('New client connected:', socket.id);
-        console.log('A user connected');
-   });
-   server.listen(3000, () => {
-     console.log('Server listening on port 3000');
-   });
 
   socket.on('createNewRoom', () => {
     const roomCode = Math.random().toString(36).substr(2, 9);
-    rooms.set(roomCode, {
-      name: `Room ${roomCode}`,
-      playerId: socket.id,
-      game: new ScrabbleGame(),
-      started: false
-    });
+    const hostId = socket.id;
+    const hostName = 'Host'; // You might want to get the host name from the client
+    const room = createNewRoom(roomCode, hostId, hostName, MAX_PLAYERS);
+
+    gameRooms.set(roomCode, room);
     socket.join(roomCode);
     socket.emit('roomCreated', roomCode);
-    io.to(roomCode).emit('playerUpdate', { 
-      players: rooms.get(roomCode).players, 
-      roomName: rooms.get(roomCode).name 
-    });
+    io.to(roomCode).emit('gameState', room);
   });
-      socket.on('joinRoom', ({ playerName, isHost, maxPlayers = MAX_PLAYERS }) => {
+      socket.on('joinRoom', ({ playerName, isHost, maxPlayers = MAX_PLAYERS, roomCode }) => {
         console.log(`Player ${playerName} isHost: ${isHost}`);
         let room = gameRooms.get(roomCode);
         
