@@ -30,15 +30,12 @@ const SocketHandler = (req, res) => {
     });
     
     io.on('connection', (socket) => {
-      console.log('New client connected:', socket.id);
-      
-      io.on('connection', (socket) => {
-   console.debug('New client connected:', socket.id);
-     console.log('A user connected');
-});
-server.listen(3000, () => {
-  console.log('Server listening on port 3000');
-});
+      console.debug('New client connected:', socket.id);
+        console.log('A user connected');
+   });
+   server.listen(3000, () => {
+     console.log('Server listening on port 3000');
+   });
 
   socket.on('createNewRoom', () => {
     const roomCode = Math.random().toString(36).substr(2, 9);
