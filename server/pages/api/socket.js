@@ -10,7 +10,7 @@ import {
   //DICTIONARY_API
 } from '../../../lib/constants';
 
-const gameRooms = new Map();
+export const gameRooms = new Map();
 
 const SocketHandler = (req, res) => {
   if (!res.socket.server.io) {
