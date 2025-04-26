@@ -1,0 +1,12 @@
+.node
+/node
+node_modules
+.node_modules
+/node_modules
+.next
+.env
+.DS_Store
+yarn-error.log
+npm-debug.log
+.vscode
+.env
